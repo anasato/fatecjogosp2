@@ -1,4 +1,8 @@
-import { createUsuario, listarUsuarios, loginUser } from "../models/usuario.js";
+import {
+  createUsuario,
+  listarUsuarios,
+  buscarUsuarioPorEmail,
+} from "../models/usuario.js";
 
 export async function createUsuarioC(req, res) {
   const dados = req.body;
@@ -31,9 +35,9 @@ export async function autenticarUsuarioC(req, res) {
   const { emailUsuario, senhaUsuario } = req.body;
 
   try {
-    const user = await loginUser(emailUsuario, senhaUsuario);
+    const user = await buscarUsuarioPorEmail(emailUsuario);
 
-    if (user) {
+    if (user && user.senhaUsuario === senhaUsuario) {
       // Autenticação bem-sucedida
       res.json({
         success: true,
