@@ -1,4 +1,4 @@
-import { createUsuario, listarUsuarios } from "../models/usuario.js";
+import { createUsuario, listarUsuarios, loginUser } from "../models/usuario.js";
 
 export async function createUsuarioC(req, res) {
   const dados = req.body;
@@ -24,5 +24,33 @@ export async function listarUsuariosC(req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Erro ao listar usuarios" });
+  }
+}
+
+export async function autenticarUsuarioC(req, res) {
+  const { emailUsuario, senhaUsuario } = req.body;
+
+  try {
+    const user = await loginUser(emailUsuario, senhaUsuario);
+
+    if (user) {
+      // Autenticação bem-sucedida
+      res.json({
+        success: true,
+        message: "Login realizado com sucesso!",
+        user,
+      });
+    } else {
+      // Credenciais inválidas
+      res.json({
+        success: false,
+        message: "Credenciais inválidas. Tente novamente.",
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao realizar o login", error);
+    res
+      .status(500)
+      .json({ error: "Erro ao realizar o login. Verifique o console." });
   }
 }

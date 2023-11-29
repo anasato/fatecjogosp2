@@ -11,3 +11,26 @@ export async function createUsuario(dados) {
 export async function listarUsuarios() {
   return prisma.usuario.findMany();
 }
+
+export async function buscarUsuarioPorEmail(emailUsuario) {
+  return prisma.usuario.findUnique({
+    where: {
+      emailUsuario: emailUsuario,
+    },
+  });
+}
+
+export async function loginUser(emailUsuario, senhaUsuario) {
+  try {
+    const user = await buscarUsuarioPorEmail(emailUsuario);
+
+    if (user && user.senhaUsuario === senhaUsuario) {
+      return user;
+    } else {
+      return null; // Credenciais inválidas
+    }
+  } catch (error) {
+    console.error("Erro ao verificar credenciais do usuário", error);
+    throw error;
+  }
+}
