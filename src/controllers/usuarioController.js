@@ -1,4 +1,4 @@
-import { createUsuario } from "../models/usuario.js";
+import { createUsuario, listarUsuarios } from "../models/usuario.js";
 
 export async function createUsuarioC(req, res) {
   const dados = req.body;
@@ -14,5 +14,15 @@ export async function createUsuarioC(req, res) {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Erro ao criar usuário" });
+  }
+}
+
+export async function listarUsuariosC(req, res) {
+  try {
+    const usuario = await listarUsuarios();
+    res.json(usuario);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Erro ao listar usuarios" });
   }
 }
