@@ -26,10 +26,10 @@ export async function listarPartidas() {
   return prisma.Partida.findMany();
 }
 
-export async function buscarPartidaPorId(donoPartida) {
+export async function buscarPartidaPorId(donoIdPartida) {
   return prisma.Partida.findFirst({
     where: {
-      donoPartida: donoPartida,
+      donoIdPartida: donoIdPartida,
     },
   });
 }
