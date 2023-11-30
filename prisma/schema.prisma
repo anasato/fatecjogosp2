@@ -12,9 +12,20 @@ datasource db {
 
 model Usuario {
   idUsuario       Int     @id @default(autoincrement()) @unique
-  nomeUsuario     String
-  emailUsuario    String
+  nomeUsuario     String  
+  emailUsuario    String  @unique
   senhaUsuario    String
+  partidas Partida[]
+}
+
+model Partida {
+  idPartida       Int      @id @default(autoincrement()) @unique
+  esportePartida  String
+  dataPartida     DateTime
+  horarioPartida  String
+  periodoPartida  Int
+  donoPartida     Usuario  @relation(fields: [donoIdPartida], references: [idUsuario])
+  donoIdPartida   Int
 }
 
 
