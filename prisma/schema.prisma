@@ -23,7 +23,7 @@ model Partida {
   esportePartida  String
   dataPartida     DateTime
   horarioPartida  String
-  periodoPartida  Int
+  periodoPartida  String
   donoPartida     Usuario  @relation(fields: [donoIdPartida], references: [idUsuario])
   donoIdPartida   Int
 }
